@@ -31,33 +31,31 @@ class ViewController: UIViewController, CNContactPickerDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func selectFromContacts(sender: AnyObject) {
+    @IBAction func selectFromContacts(_ sender: AnyObject) {
         let controller = CNContactPickerViewController()
         controller.delegate = self
-        self.presentViewController(controller,
+        self.present(controller,
             animated: true, completion: nil)
     }
     
-    
-    func contactPicker(picker: CNContactPickerViewController, didSelectContact contact: CNContact) {
-        if (contact.phoneNumbers.count > 0) {
-            let phoneNumber : CNPhoneNumber = contact.phoneNumbers.first!.value as! CNPhoneNumber
-            parseNumber(phoneNumber.stringValue)
-        }
-        else {
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+        guard let firstPhoneNumber = contact.phoneNumbers.first else {
             clearResults()
-            print("Something went wrong")
+            return;
         }
+        let phoneNumber = firstPhoneNumber.value
+        parseNumber(phoneNumber.stringValue)
     }
 
-    func parseNumber(number: String) {
+    func parseNumber(_ number: String) {
         do {
-            let phoneNumber = try PhoneNumber(rawNumber: number)
-            parsedNumberLabel.text = phoneNumber.toInternational()
+            let phoneNumber = try phoneNumberKit.parse(number)
+            parsedNumberLabel.text = phoneNumberKit.format(phoneNumber, toType: .international)
             parsedCountryCodeLabel.text = String(phoneNumber.countryCode)
-            let regionCode = phoneNumberKit.mainCountryForCode(phoneNumber.countryCode)
-            let country = NSLocale.currentLocale().displayNameForKey(NSLocaleCountryCode, value: regionCode!)
-            parsedCountryLabel.text = country
+            if let regionCode = phoneNumberKit.mainCountry(forCode:phoneNumber.countryCode) {
+                let country = Locale.current.localizedString(forRegionCode: regionCode)
+                parsedCountryLabel.text = country
+            }
         }
         catch {
             clearResults()
@@ -70,8 +68,5 @@ class ViewController: UIViewController, CNContactPickerDelegate {
         parsedCountryCodeLabel.text = notAvailable
         parsedCountryLabel.text = notAvailable
     }
-    
-
 
 }
-

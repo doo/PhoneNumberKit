@@ -9,30 +9,11 @@
 import Foundation
 
 // MARK: Private Enums
-
-enum PNNumberFormat {
-    case E164
-    case International
-    case National
-}
-
-enum PNCountryCodeSource {
-    case NumberWithPlusSign
-    case NumberWithIDD
-    case NumberWithoutPlusSign
-    case DefaultCountry
-}
-
-enum PNRegexError:  ErrorType {
-    case General
-}
-
-enum PNValidationResult:  ErrorType {
-    case Unknown
-    case IsPossible
-    case InvalidCountryCode
-    case TooShort
-    case TooLong
+enum PhoneNumberCountryCodeSource {
+    case numberWithPlusSign
+    case numberWithIDD
+    case numberWithoutPlusSign
+    case defaultCountry
 }
 
 // MARK: Public Enums
@@ -40,83 +21,127 @@ enum PNValidationResult:  ErrorType {
 /**
 Enumeration for parsing error types
 
-- TechnicalError: A generic error occured.
+- GeneralError: A general error occured.
+- InvalidCountryCode: A country code could not be found or the one found was invalid
 - NotANumber: The string provided is not a number
 - TooLong: The string provided is too long to be a valid number
 - TooShort: The string provided is too short to be a valid number
-- InvalidCountryCode: A country code could not be found or the one found was invalid
+- Deprecated: The method used was deprecated
 */
-public enum PNParsingError:  ErrorType {
-    case TechnicalError
-    case NotANumber
-    case TooLong
-    case TooShort
-    case InvalidCountryCode
+public enum PhoneNumberError: Error {
+    case generalError
+    case invalidCountryCode
+    case notANumber
+    case unknownType
+    case tooLong
+    case tooShort
+    case deprecated
 }
+
+extension PhoneNumberError: LocalizedError {
+
+    public var errorDescription: String? {
+        switch self {
+        case .generalError: return NSLocalizedString("An error occured whilst validating the phone number.", comment: "")
+        case .invalidCountryCode: return NSLocalizedString("The country code is invalid.", comment: "")
+        case .notANumber: return NSLocalizedString("The number provided is invalid.", comment: "")
+        case .unknownType: return NSLocalizedString("Phone number type is unknown.", comment: "")
+        case .tooLong: return NSLocalizedString("The number provided is too long.", comment: "")
+        case .tooShort: return NSLocalizedString("The number provided is too short.", comment: "")
+        case .deprecated: return NSLocalizedString("This function is deprecated.", comment: "")
+        }
+    }
+
+}
+
+public enum PhoneNumberFormat {
+    case e164 // +33689123456
+    case international // +33 6 89 12 34 56
+    case national // 06 89 12 34 56
+}
+
 
 /**
  Phone number type enumeration
- 
- - FixedLine: Fixed line numbers
- - Mobile: Mobile numbers
- - Pager: Pager numbers
- - PersonalNumber: Personal number numbers
- - PremiumRate: Premium rate numbers
- - SharedCost: Shared cost numbers
- - TollFree: Toll free numbers
- - Voicemail: Voice mail numbers
- - VOIP: Voip numbers
- - UAN: UAN numbers
- - Unknown: Unknown number type
+ - fixedLine: Fixed line numbers
+ - mobile: Mobile numbers
+ - fixedOrMobile: Either fixed or mobile numbers if we can't tell conclusively.
+ - pager: Pager numbers
+ - personalNumber: Personal number numbers
+ - premiumRate: Premium rate numbers
+ - sharedCost: Shared cost numbers
+ - tollFree: Toll free numbers
+ - voicemail: Voice mail numbers
+ - vOIP: Voip numbers
+ - uan: UAN numbers
+ - unknown: Unknown number type
  */
-public enum PNPhoneNumberType {
-    case FixedLine
-    case Mobile
-    case Pager
-    case PersonalNumber
-    case PremiumRate
-    case SharedCost
-    case TollFree
-    case Voicemail
-    case VOIP
-    case UAN
-    case Unknown
+public enum PhoneNumberType {
+    case fixedLine
+    case mobile
+    case fixedOrMobile
+    case pager
+    case personalNumber
+    case premiumRate
+    case sharedCost
+    case tollFree
+    case voicemail
+    case voip
+    case uan
+    case unknown
 }
 
 // MARK: Constants
 
-let PNMinLengthForNSN: Int = 2
-let PNMaxInputStringLength: Int = 250
-let PNMaxLengthCountryCode: Int = 3
-let PNMaxLengthForNSN: Int = 16
-let PNNonBreakingSpace: String = "\u{00a0}"
-let PNPlusChars: String = "+＋"
-let PNValidDigitsString: String = "0-9０-９٠-٩۰-۹"
-let PNDefaultExtnPrefix: String = " ext. "
-let PNFirstGroupPattern: String = "(\\$\\d)"
-let PNNPPattern: String = "\\$NP"
-let PNFGPattern: String = "\\$FG"
+struct PhoneNumberConstants {
+  static let defaultCountry = "US"
+  static let defaultExtnPrefix = " ext. "
+  static let longPhoneNumber = "999999999999999"
+  static let minLengthForNSN = 2
+  static let maxInputStringLength = 250
+  static let maxLengthCountryCode = 3
+  static let maxLengthForNSN = 16
+  static let nonBreakingSpace = "\u{00a0}"
+  static let plusChars = "+＋"
+  static let validDigitsString = "0-9０-９٠-٩۰-۹"
+  static let digitPlaceholder = "\u{2008}"
+  static let separatorBeforeNationalNumber = " "
+}
 
-// MARK: Patterns
+struct PhoneNumberPatterns {
+  // MARK: Patterns
+  
+  static let firstGroupPattern = "(\\$\\d)"
+  static let fgPattern = "\\$FG"
+  static let npPattern = "\\$NP"
 
-let PNAllNormalizationMappings : [String: String] = ["0":"0", "1":"1", "2":"2", "3":"3", "4":"4", "5":"5", "6":"6", "7":"7", "8":"8", "9":"9", "\u{FF10}":"0", "\u{FF11}":"1", "\u{FF12}":"2", "\u{FF13}":"3", "\u{FF14}":"4", "\u{FF15}":"5", "\u{FF16}":"6", "\u{FF17}":"7", "\u{FF18}":"8", "\u{FF19}":"9", "\u{0660}":"0", "\u{0661}":"1", "\u{0662}":"2", "\u{0663}":"3", "\u{0664}":"4", "\u{0665}":"5", "\u{0666}":"6", "\u{0667}":"7", "\u{0668}":"8", "\u{0669}":"9", "\u{06F0}":"0", "\u{06F1}":"1", "\u{06F2}":"2", "\u{06F3}":"3", "\u{06F4}":"4", "\u{06F5}":"5", "\u{06F6}":"6", "\u{06F7}":"7", "\u{06F8}":"8", "\u{06F9}":"9"]
+  static let allNormalizationMappings = ["0":"0", "1":"1", "2":"2", "3":"3", "4":"4", "5":"5", "6":"6", "7":"7", "8":"8", "9":"9"]
 
+  static let capturingDigitPattern = "([0-9０-９٠-٩۰-۹])"
 
-//let PNAllNormalizationMappings: [String: String] = ["0":"0", "1":"1", "2":"2", "3":"3", "4":"4", "5":"5", "6":"6", "7":"7", "8":"8", "9":"9", "\u{FF10}":"0", "\u{FF11}":"1", "\u{FF12}":"2", "\u{FF13}":"3", "\u{FF14}":"4", "\u{FF15}":"5", "\u{FF16}":"6", "\u{FF17}":"7", "\u{FF18}":"8", "\u{FF19}":"9", "\u{0660}":"0", "\u{0661}":"1", "\u{0662}":"2", "\u{0663}":"3", "\u{0664}":"4", "\u{0665}":"5", "\u{0666}":"6", "\u{0667}":"7", "\u{0668}":"8", "\u{0669}":"9", "\u{06F0}":"0", "\u{06F1}":"1", "\u{06F2}":"2", "\u{06F3}":"3", "\u{06F4}":"4", "\u{06F5}":"5", "\u{06F6}":"6", "\u{06F7}":"7", "\u{06F8}":"8", "\u{06F9}":"9", "A":"2", "B":"2", "C":"2", "D":"3", "E":"3", "F":"3", "G":"4", "H":"4", "I":"4", "J":"5", "K":"5", "L":"5", "M":"6", "N":"6", "O":"6", "P":"7", "Q":"7", "R":"7", "S":"7", "T":"8", "U":"8", "V":"8", "W":"9", "X":"9", "Y":"9", "Z":"9"]
+  static let extnPattern = "(?:;ext=([0-9０-９٠-٩۰-۹]{1,7})|[  \\t,]*(?:e?xt(?:ensi(?:ó?|ó))?n?|ｅ?ｘｔｎ?|[,xｘX#＃~～]|int|anexo|ｉｎｔ)[:\\.．]?[  \\t,-]*([0-9０-９٠-٩۰-۹]{1,7})#?|[- ]+([0-9０-９٠-٩۰-۹]{1,5})#)$"
 
-let PNCapturingDigitPattern = "([0-9０-９٠-٩۰-۹])"
+  static let iddPattern = "^(?:\\+|%@)"
 
-let PNExtnPattern = "\\;(.*)"
+  static let formatPattern = "^(?:%@)$"
 
-let PNLeadingPlusCharsPattern = "^[+＋]+"
+  static let characterClassPattern = "\\[([^\\[\\]])*\\]"
 
-let PNSecondNumberStartPattern = "[\\\\\\/] *x"
+  static let standaloneDigitPattern = "\\d(?=[^,}][^,}])"
 
-let PNUnwantedEndPattern = "[^0-9０-９٠-٩۰-۹A-Za-z#]+$"
+  static let nationalPrefixParsingPattern = "^(?:%@)"
 
-let PNValidStartPattern = "[+＋0-9０-９٠-٩۰-۹]"
+  static let prefixSeparatorPattern = "[- ]"
 
-let PNValidPhoneNumberPattern: String = "^[0-9０-９٠-٩۰-۹]{2}$|^[+＋]*(?:[-x\u{2010}-\u{2015}\u{2212}\u{30FC}\u{FF0D}-\u{FF0F} \u{00A0}\u{00AD}\u{200B}\u{2060}\u{3000}()\u{FF08}\u{FF09}\u{FF3B}\u{FF3D}.\\[\\]/~\u{2053}\u{223C}\u{FF5E}*]*[0-9\u{FF10}-\u{FF19}\u{0660}-\u{0669}\u{06F0}-\u{06F9}]){3,}[-x\u{2010}-\u{2015}\u{2212}\u{30FC}\u{FF0D}-\u{FF0F} \u{00A0}\u{00AD}\u{200B}\u{2060}\u{3000}()\u{FF08}\u{FF09}\u{FF3B}\u{FF3D}.\\[\\]/~\u{2053}\u{223C}\u{FF5E}*A-Za-z0-9\u{FF10}-\u{FF19}\u{0660}-\u{0669}\u{06F0}-\u{06F9}]*(?:(?:;ext=([0-9０-９٠-٩۰-۹]{1,7})|[  \\t,]*(?:e?xt(?:ensi(?:ó?|ó))?n?|ｅ?ｘｔｎ?|[,xｘX#＃~～]|int|anexo|ｉｎｔ)[:\\.．]?[  \\t,-]*([0-9０-９٠-٩۰-۹]{1,7})#?|[- ]+([0-9０-９٠-٩۰-۹]{1,5})#)?$)?$"
+  static let eligibleAsYouTypePattern = "^[-x‐-―−ー－-／ ­​⁠　()（）［］.\\[\\]/~⁓∼～]*(\\$\\d[-x‐-―−ー－-／ ­​⁠　()（）［］.\\[\\]/~⁓∼～]*)+$"
 
+  static let leadingPlusCharsPattern = "^[+＋]+"
 
+  static let secondNumberStartPattern = "[\\\\\\/] *x"
 
+  static let unwantedEndPattern = "[^0-9０-９٠-٩۰-۹A-Za-z#]+$"
+
+  static let validStartPattern = "[+＋0-9０-９٠-٩۰-۹]"
+
+  static let validPhoneNumberPattern = "^[0-9０-９٠-٩۰-۹]{2}$|^[+＋]*(?:[-x\u{2010}-\u{2015}\u{2212}\u{30FC}\u{FF0D}-\u{FF0F} \u{00A0}\u{00AD}\u{200B}\u{2060}\u{3000}()\u{FF08}\u{FF09}\u{FF3B}\u{FF3D}.\\[\\]/~\u{2053}\u{223C}\u{FF5E}*]*[0-9\u{FF10}-\u{FF19}\u{0660}-\u{0669}\u{06F0}-\u{06F9}]){3,}[-x\u{2010}-\u{2015}\u{2212}\u{30FC}\u{FF0D}-\u{FF0F} \u{00A0}\u{00AD}\u{200B}\u{2060}\u{3000}()\u{FF08}\u{FF09}\u{FF3B}\u{FF3D}.\\[\\]/~\u{2053}\u{223C}\u{FF5E}*A-Za-z0-9\u{FF10}-\u{FF19}\u{0660}-\u{0669}\u{06F0}-\u{06F9}]*(?:(?:;ext=([0-9０-９٠-٩۰-۹]{1,7})|[  \\t,]*(?:e?xt(?:ensi(?:ó?|ó))?n?|ｅ?ｘｔｎ?|[,xｘX#＃~～]|int|anexo|ｉｎｔ)[:\\.．]?[  \\t,-]*([0-9０-９٠-٩۰-۹]{1,7})#?|[- ]+([0-9０-９٠-٩۰-۹]{1,5})#)?$)?$"
+}

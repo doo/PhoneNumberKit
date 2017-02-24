@@ -166,12 +166,11 @@
 		3472095F1BB808D1004DE6DA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Roy Marmelstein";
 				TargetAttributes = {
 					347209661BB808D1004DE6DA = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0800;
 					};
 					3472097A1BB808D1004DE6DA = {
 						CreatedOnToolsVersion = 7.0;

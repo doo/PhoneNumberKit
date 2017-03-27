@@ -548,77 +548,53 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		08F6AF2F1E6DC8AB00C61DC1 /* AppStoreVPP */ = {
+		08F6AF2F1E6DC8AB00C61DC1 /* AppStorePro */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				PRODUCT_NAME = "PhoneNumberKit-macOS";
 			};
-			name = AppStoreVPP;
+			name = AppStorePro;
 		};
-		08F6AF301E6DC8AB00C61DC1 /* AppStore */ = {
+		08F6AF301E6DC8AB00C61DC1 /* AppStoreFree */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				PRODUCT_NAME = "PhoneNumberKit-macOS";
 			};
-			name = AppStore;
+			name = AppStoreFree;
 		};
-		08F6AF311E6DC8AB00C61DC1 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				PRODUCT_NAME = "PhoneNumberKit-macOS";
-			};
-			name = AdHoc;
-		};
-		08F6AF321E6DC8AB00C61DC1 /* AppStoreVPP */ = {
+		08F6AF321E6DC8AB00C61DC1 /* AppStorePro */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				PRODUCT_NAME = "PhoneNumberKit-watchOS";
 			};
-			name = AppStoreVPP;
+			name = AppStorePro;
 		};
-		08F6AF331E6DC8AB00C61DC1 /* AppStore */ = {
+		08F6AF331E6DC8AB00C61DC1 /* AppStoreFree */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				PRODUCT_NAME = "PhoneNumberKit-watchOS";
 			};
-			name = AppStore;
+			name = AppStoreFree;
 		};
-		08F6AF341E6DC8AB00C61DC1 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				PRODUCT_NAME = "PhoneNumberKit-watchOS";
-			};
-			name = AdHoc;
-		};
-		08F6AF351E6DC8AB00C61DC1 /* AppStoreVPP */ = {
+		08F6AF351E6DC8AB00C61DC1 /* AppStorePro */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				PRODUCT_NAME = "PhoneNumberKit-tvOS";
 			};
-			name = AppStoreVPP;
+			name = AppStorePro;
 		};
-		08F6AF361E6DC8AB00C61DC1 /* AppStore */ = {
+		08F6AF361E6DC8AB00C61DC1 /* AppStoreFree */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				PRODUCT_NAME = "PhoneNumberKit-tvOS";
 			};
-			name = AppStore;
-		};
-		08F6AF371E6DC8AB00C61DC1 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				PRODUCT_NAME = "PhoneNumberKit-tvOS";
-			};
-			name = AdHoc;
+			name = AppStoreFree;
 		};
 		342418761BB6E5A000EE70E7 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -783,7 +759,7 @@
 			};
 			name = Release;
 		};
-		478AB6911BFB6B5B0036181C /* AdHoc */ = {
+		478AB6941BFB6B700036181C /* AppStoreFree */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -824,9 +800,9 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = AdHoc;
+			name = AppStoreFree;
 		};
-		478AB6921BFB6B5B0036181C /* AdHoc */ = {
+		478AB6951BFB6B700036181C /* AppStoreFree */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -843,9 +819,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
-			name = AdHoc;
+			name = AppStoreFree;
 		};
-		478AB6931BFB6B5B0036181C /* AdHoc */ = {
+		478AB6961BFB6B700036181C /* AppStoreFree */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = PhoneNumberKitTests/Info.plist;
@@ -853,9 +829,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.roymarmelstein.PhoneNumberKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
-			name = AdHoc;
+			name = AppStoreFree;
 		};
-		478AB6941BFB6B700036181C /* AppStore */ = {
+		478AB6971BFB6B7A0036181C /* AppStorePro */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -896,9 +872,9 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = AppStore;
+			name = AppStorePro;
 		};
-		478AB6951BFB6B700036181C /* AppStore */ = {
+		478AB6981BFB6B7A0036181C /* AppStorePro */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -915,9 +891,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
-			name = AppStore;
+			name = AppStorePro;
 		};
-		478AB6961BFB6B700036181C /* AppStore */ = {
+		478AB6991BFB6B7A0036181C /* AppStorePro */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = PhoneNumberKitTests/Info.plist;
@@ -925,79 +901,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.roymarmelstein.PhoneNumberKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
-			name = AppStore;
-		};
-		478AB6971BFB6B7A0036181C /* AppStoreVPP */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
-				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = AppStoreVPP;
-		};
-		478AB6981BFB6B7A0036181C /* AppStoreVPP */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PhoneNumberKit/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.roymarmelstein.PhoneNumberKit;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = AppStoreVPP;
-		};
-		478AB6991BFB6B7A0036181C /* AppStoreVPP */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = PhoneNumberKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.roymarmelstein.PhoneNumberKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = AppStoreVPP;
+			name = AppStorePro;
 		};
 		C6DF6C501D1B09CF00259F4B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1143,9 +1047,8 @@
 			buildConfigurations = (
 				342418761BB6E5A000EE70E7 /* Debug */,
 				342418771BB6E5A000EE70E7 /* Release */,
-				478AB6971BFB6B7A0036181C /* AppStoreVPP */,
-				478AB6941BFB6B700036181C /* AppStore */,
-				478AB6911BFB6B5B0036181C /* AdHoc */,
+				478AB6971BFB6B7A0036181C /* AppStorePro */,
+				478AB6941BFB6B700036181C /* AppStoreFree */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1155,9 +1058,8 @@
 			buildConfigurations = (
 				342418791BB6E5A000EE70E7 /* Debug */,
 				3424187A1BB6E5A000EE70E7 /* Release */,
-				478AB6981BFB6B7A0036181C /* AppStoreVPP */,
-				478AB6951BFB6B700036181C /* AppStore */,
-				478AB6921BFB6B5B0036181C /* AdHoc */,
+				478AB6981BFB6B7A0036181C /* AppStorePro */,
+				478AB6951BFB6B700036181C /* AppStoreFree */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1167,9 +1069,8 @@
 			buildConfigurations = (
 				3424187C1BB6E5A000EE70E7 /* Debug */,
 				3424187D1BB6E5A000EE70E7 /* Release */,
-				478AB6991BFB6B7A0036181C /* AppStoreVPP */,
-				478AB6961BFB6B700036181C /* AppStore */,
-				478AB6931BFB6B5B0036181C /* AdHoc */,
+				478AB6991BFB6B7A0036181C /* AppStorePro */,
+				478AB6961BFB6B700036181C /* AppStoreFree */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1179,9 +1080,8 @@
 			buildConfigurations = (
 				C6DF6C501D1B09CF00259F4B /* Debug */,
 				C6DF6C511D1B09CF00259F4B /* Release */,
-				08F6AF2F1E6DC8AB00C61DC1 /* AppStoreVPP */,
-				08F6AF301E6DC8AB00C61DC1 /* AppStore */,
-				08F6AF311E6DC8AB00C61DC1 /* AdHoc */,
+				08F6AF2F1E6DC8AB00C61DC1 /* AppStorePro */,
+				08F6AF301E6DC8AB00C61DC1 /* AppStoreFree */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1191,9 +1091,8 @@
 			buildConfigurations = (
 				C6DF6C961D1B120400259F4B /* Debug */,
 				C6DF6C971D1B120400259F4B /* Release */,
-				08F6AF321E6DC8AB00C61DC1 /* AppStoreVPP */,
-				08F6AF331E6DC8AB00C61DC1 /* AppStore */,
-				08F6AF341E6DC8AB00C61DC1 /* AdHoc */,
+				08F6AF321E6DC8AB00C61DC1 /* AppStorePro */,
+				08F6AF331E6DC8AB00C61DC1 /* AppStoreFree */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1203,9 +1102,8 @@
 			buildConfigurations = (
 				C6DF6CD21D1B18B000259F4B /* Debug */,
 				C6DF6CD31D1B18B000259F4B /* Release */,
-				08F6AF351E6DC8AB00C61DC1 /* AppStoreVPP */,
-				08F6AF361E6DC8AB00C61DC1 /* AppStore */,
-				08F6AF371E6DC8AB00C61DC1 /* AdHoc */,
+				08F6AF351E6DC8AB00C61DC1 /* AppStorePro */,
+				08F6AF361E6DC8AB00C61DC1 /* AppStoreFree */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

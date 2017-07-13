@@ -81,7 +81,7 @@ public final class PhoneNumberKit: NSObject {
     /// Get a list of all the countries in the metadata database
     ///
     /// - returns: An array of ISO 639 compliant region codes.
-    public func allCountries() -> [String] {
+    @objc public func allCountries() -> [String] {
         let results = metadataManager.territories.map{$0.codeID}
         return results
     }
@@ -91,8 +91,8 @@ public final class PhoneNumberKit: NSObject {
     /// - parameter countryCode: international country code (e.g 44 for the UK).
     ///
     /// - returns: optional array of ISO 639 compliant region codes.
-    public func countries(withCode countryCode: UInt64) -> [String]? {
-        let results = metadataManager.filterTerritories(byCode: countryCode)?.map{$0.codeID}.flatMap{$0}
+    @objc public func countries(withCode countryCode: UInt64) -> [String]? {
+        let results = metadataManager.filterTerritories(byCode: countryCode)?.map{$0.codeID}
         return results
     }
     
@@ -101,7 +101,7 @@ public final class PhoneNumberKit: NSObject {
     /// - parameter countryCode: international country code (e.g 1 for the US).
     ///
     /// - returns: ISO 639 compliant region code string.
-    public func mainCountry(forCode countryCode: UInt64) -> String? {
+    @objc public func mainCountry(forCode countryCode: UInt64) -> String? {
         let country = metadataManager.mainTerritory(forCode: countryCode)
         return country?.codeID
     }
@@ -121,7 +121,7 @@ public final class PhoneNumberKit: NSObject {
     /// - parameter country: ISO 639 compliant region code.
     ///
     /// - returns: leading digits (e.g. 876 for Jamaica).
-    public func leadingDigits(for country: String) -> String? {
+    @objc public func leadingDigits(for country: String) -> String? {
         let leadingDigits = metadataManager.filterTerritories(byCountry: country)?.leadingDigits
         return leadingDigits
     }
@@ -140,7 +140,7 @@ public final class PhoneNumberKit: NSObject {
     /// Get a user's default region code
     ///
     /// - returns: A computed value for the user's current region - based on the iPhone's carrier and if not available, the device region.
-    public class func defaultRegionCode() -> String {
+    @objc public class func defaultRegionCode() -> String {
 #if os(iOS)
         let networkInfo = CTTelephonyNetworkInfo()
         let carrier = networkInfo.subscriberCellularProvider
@@ -152,7 +152,7 @@ public final class PhoneNumberKit: NSObject {
         if #available(iOS 10.0, *), let countryCode = currentLocale.regionCode {
             return countryCode.uppercased()
         } else {
-			if let countryCode = (currentLocale as NSLocale).object(forKey: .countryCode) as? String {
+            if let countryCode = (currentLocale as NSLocale).object(forKey: .countryCode) as? String {
                 return countryCode.uppercased()
             }
         }

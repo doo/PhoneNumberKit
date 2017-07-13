@@ -12,16 +12,16 @@ import UIKit
 /// Custom text field that formats phone numbers
 open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
     
-    let phoneNumberKit = PhoneNumberKit()
+    @objc let phoneNumberKit = PhoneNumberKit()
     
     /// Override region to set a custom region. Automatically uses the default region code.
-    public var defaultRegion = PhoneNumberKit.defaultRegionCode() {
+    @objc public var defaultRegion = PhoneNumberKit.defaultRegionCode() {
         didSet {
             partialFormatter.defaultRegion = defaultRegion
         }
     }
     
-    public var withPrefix: Bool = true {
+    @objc public var withPrefix: Bool = true {
         didSet {
             partialFormatter.withPrefix = withPrefix
             if withPrefix == false {
@@ -36,7 +36,7 @@ open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
     
     let partialFormatter: PartialFormatter
     
-    let nonNumericSet: NSCharacterSet = {
+    @objc let nonNumericSet: NSCharacterSet = {
         var mutableSet = NSMutableCharacterSet.decimalDigit().inverted
         mutableSet.remove(charactersIn: PhoneNumberConstants.plusChars)
         return mutableSet as NSCharacterSet
@@ -55,12 +55,12 @@ open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
     
     //MARK: Status
     
-    public var currentRegion: String {
+    @objc public var currentRegion: String {
         get {
             return partialFormatter.currentRegion
         }
     }
-    public var isValidNumber: Bool {
+    @objc public var isValidNumber: Bool {
         get {
             let rawNumber = self.text ?? String()
             do {
@@ -101,7 +101,7 @@ open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
         self.setup()
     }
     
-    func setup(){
+    @objc func setup(){
         self.autocorrectionType = .no
         self.keyboardType = UIKeyboardType.phonePad
         super.delegate = self

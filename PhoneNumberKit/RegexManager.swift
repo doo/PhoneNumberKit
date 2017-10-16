@@ -189,7 +189,7 @@ final class RegexManager {
     
     func stringByReplacingOccurrences(_ string: String, map: [String:String]) -> String {
         var targetString = String()
-        for i in 0 ..< string.characters.count {
+        for i in 0 ..< string.count {
             let oneChar = string[string.characters.index(string.startIndex, offsetBy: i)]
             let keyString = String(oneChar).uppercased()
             if let mappedValue = map[keyString] {
@@ -203,7 +203,7 @@ final class RegexManager {
     
     func hasValue(_ value: String?) -> Bool {
         if let valueString = value {
-            if valueString.trimmingCharacters(in: spaceCharacterSet).characters.count == 0 {
+            if valueString.trimmingCharacters(in: spaceCharacterSet).count == 0 {
                 return false
             }
             return true

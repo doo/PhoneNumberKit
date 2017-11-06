@@ -190,7 +190,7 @@ final class RegexManager {
     func stringByReplacingOccurrences(_ string: String, map: [String:String]) -> String {
         var targetString = String()
         for i in 0 ..< string.count {
-            let oneChar = string[string.characters.index(string.startIndex, offsetBy: i)]
+            let oneChar = string[string.index(string.startIndex, offsetBy: i)]
             let keyString = String(oneChar).uppercased()
             if let mappedValue = map[keyString] {
                 targetString.append(mappedValue)

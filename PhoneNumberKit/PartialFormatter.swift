@@ -106,13 +106,13 @@ public final class PartialFormatter {
         if prefixBeforeNationalNumber.count > 0 {
             finalNumber.append(prefixBeforeNationalNumber)
         }
-        if shouldAddSpaceAfterNationalPrefix && prefixBeforeNationalNumber.count > 0 && prefixBeforeNationalNumber.characters.last != PhoneNumberConstants.separatorBeforeNationalNumber.characters.first  {
+        if shouldAddSpaceAfterNationalPrefix && prefixBeforeNationalNumber.count > 0 && prefixBeforeNationalNumber.last != PhoneNumberConstants.separatorBeforeNationalNumber.first  {
             finalNumber.append(PhoneNumberConstants.separatorBeforeNationalNumber)
         }
         if nationalNumber.count > 0 {
             finalNumber.append(nationalNumber)
         }
-        if finalNumber.characters.last == PhoneNumberConstants.separatorBeforeNationalNumber.characters.first {
+        if finalNumber.last == PhoneNumberConstants.separatorBeforeNationalNumber.first {
             finalNumber = String(finalNumber[..<finalNumber.index(before: finalNumber.endIndex)])
         }
         
@@ -149,8 +149,8 @@ public final class PartialFormatter {
     internal func isNanpaNumberWithNationalPrefix(_ rawNumber: String) -> Bool {
         guard currentMetadata?.countryCode == 1 && rawNumber.count > 1 else { return false }
         
-        let firstCharacter: String = String(describing: rawNumber.characters.first)
-        let secondCharacter: String = String(describing: rawNumber.characters[rawNumber.characters.index(rawNumber.characters.startIndex, offsetBy: 1)])
+        let firstCharacter: String = String(describing: rawNumber.first)
+        let secondCharacter: String = String(describing: rawNumber[rawNumber.index(rawNumber.startIndex, offsetBy: 1)])
         return (firstCharacter == "1" && secondCharacter != "0" && secondCharacter != "1")
     }
     
@@ -178,7 +178,7 @@ public final class PartialFormatter {
                 let matches = try regexManager?.matchedStringByRegex(prefixPattern, string: rawNumber)
                 if let m = matches?.first {
                     let startCallingCode = m.count
-                    let index = rawNumber.characters.index(rawNumber.startIndex, offsetBy: startCallingCode)
+                    let index = rawNumber.index(rawNumber.startIndex, offsetBy: startCallingCode)
                     processedNumber = String(rawNumber[index...])
                     prefixBeforeNationalNumber = String(rawNumber[..<index])
                 }
@@ -210,7 +210,7 @@ public final class PartialFormatter {
                 return processedNumber
             }
         }
-        let index = rawNumber.characters.index(rawNumber.startIndex, offsetBy: startOfNationalNumber)
+        let index = rawNumber.index(rawNumber.startIndex, offsetBy: startOfNationalNumber)
         processedNumber = String(rawNumber[index...])
         prefixBeforeNationalNumber.append(String(rawNumber[..<index]))
         return processedNumber
@@ -222,7 +222,7 @@ public final class PartialFormatter {
             return rawNumber
         }
         var numberWithoutCountryCallingCode = String()
-        if prefixBeforeNationalNumber.isEmpty == false && prefixBeforeNationalNumber.characters.first != "+" {
+        if prefixBeforeNationalNumber.isEmpty == false && prefixBeforeNationalNumber.first != "+" {
             prefixBeforeNationalNumber.append(PhoneNumberConstants.separatorBeforeNationalNumber)
         }
         if let potentialCountryCode = parser?.extractPotentialCountryCode(rawNumber, nationalNumber: &numberWithoutCountryCallingCode), potentialCountryCode != 0 {
@@ -350,10 +350,10 @@ public final class PartialFormatter {
     func applyFormattingTemplate(_ template: String, rawNumber: String) -> String {
         var rebuiltString = String()
         var rebuiltIndex = 0
-        for character in template.characters {
-            if character == PhoneNumberConstants.digitPlaceholder.characters.first {
+        for character in template {
+            if character == PhoneNumberConstants.digitPlaceholder.first {
                 if rebuiltIndex < rawNumber.count {
-                    let nationalCharacterIndex = rawNumber.characters.index(rawNumber.startIndex, offsetBy: rebuiltIndex)
+                    let nationalCharacterIndex = rawNumber.index(rawNumber.startIndex, offsetBy: rebuiltIndex)
                     rebuiltString.append(rawNumber[nationalCharacterIndex])
                     rebuiltIndex += 1
                 }
@@ -365,7 +365,7 @@ public final class PartialFormatter {
             }
         }
         if rebuiltIndex < rawNumber.count {
-            let nationalCharacterIndex = rawNumber.characters.index(rawNumber.startIndex, offsetBy: rebuiltIndex)
+            let nationalCharacterIndex = rawNumber.index(rawNumber.startIndex, offsetBy: rebuiltIndex)
             let remainingNationalNumber: String = String(rawNumber[nationalCharacterIndex...])
             rebuiltString.append(remainingNationalNumber)
         }
